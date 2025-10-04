@@ -1,0 +1,21 @@
+modulo, and dividing n; mod and div are expensive, to divide use bit shift, instead of mod to get 1's place use bitwise & 1;
+
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        count = 0
+        while n:
+            n &= (n - 1)   # remove the lowest set bit
+            count += 1
+        return count
+
+
+check bit by bit
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        count = 0
+        while n:
+            count += n & 1   # check last bit
+            n >>= 1          # shift right
+        return count

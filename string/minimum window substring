@@ -1,0 +1,46 @@
+from collections import Counter
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if not s or not t:
+            return ""
+
+        # Step 1: Count characters in t
+        t_count = Counter(t)
+        required = len(t_count)
+
+        # Step 2: Initialize sliding window variables
+        left = 0
+        formed = 0
+        window_count = {}
+        res = float("inf"), 0, 0  # (window length, left, right)
+
+        # Step 3: Expand the window
+        for right, char in enumerate(s):
+            window_count[char] = window_count.get(char, 0) + 1
+
+            if char in t_count and window_count[char] == t_count[char]:
+                formed += 1
+
+            # Step 4: Contract the window when valid
+            while left <= right and formed == required:
+                if (right - left + 1) < res[0]:
+                    res = (right - left + 1, left, right)
+
+                # Shrink from left
+                window_count[s[left]] -= 1
+                if s[left] in t_count and window_count[s[left]] < t_count[s[left]]:
+                    formed -= 1
+                left += 1
+
+        # Step 5: Return result
+        return "" if res[0] == float("inf") else s[res[1]:res[2] + 1]
+
+
+
+
+        ✅ Complexity
+
+Time: O(m + n) → each character processed once
+
+Space: O(m + n) → hashmaps for counts

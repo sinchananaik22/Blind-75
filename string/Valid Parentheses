@@ -1,0 +1,22 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        # Mapping of closing -> opening brackets
+        mapping = {')': '(', '}': '{', ']': '['}
+
+        for char in s:
+            if char in mapping:  # closing bracket
+                top_element = stack.pop() if stack else '#'  # dummy char if stack empty
+                if mapping[char] != top_element:
+                    return False
+            else:  # opening bracket
+                stack.append(char)
+
+        return not stack  # True if stack is empty
+
+
+✅ Complexity
+
+Time: O(n) — each character is processed once
+
+Space: O(n) — stack for opening brackets

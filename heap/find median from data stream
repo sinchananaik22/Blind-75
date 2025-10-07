@@ -1,0 +1,26 @@
+import heapq
+
+class MedianFinder:
+
+    def __init__(self):
+        # Max-heap (invert values) for the smaller half
+        self.low = []
+        # Min-heap for the larger half
+        self.high = []
+
+    def addNum(self, num: int) -> None:
+        # Push to max-heap (invert num for max-heap)
+        heapq.heappush(self.low, -num)
+        
+        # Balance: max of low goes to high
+        heapq.heappush(self.high, -heapq.heappop(self.low))
+        
+        # Maintain size property: low can have 1 more element
+        if len(self.low) < len(self.high):
+            heapq.heappush(self.low, -heapq.heappop(self.high))
+
+    def findMedian(self) -> float:
+        if len(self.low) > len(self.high):
+            return -self.low[0]
+        else:
+            return (-self.low[0] + self.high[0]) / 2

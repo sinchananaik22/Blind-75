@@ -1,0 +1,15 @@
+from collections import Counter
+import heapq
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # Step 1: Count frequencies
+        freq = Counter(nums)
+        
+        # Step 2: Use a heap to get k largest frequencies
+        # heapq.nlargest returns the k keys with largest values
+        return heapq.nlargest(k, freq.keys(), key=freq.get)
+
+
+Time Complexity: O(n)
+Space Complexity: O(n)

@@ -1,0 +1,27 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        seen = set()
+        left = 0
+        max_len = 0
+
+        for right in range(len(s)):
+            # If duplicate, shrink from left
+            while s[right] in seen:
+                seen.remove(s[left])
+                left += 1
+
+            # Add current character
+            seen.add(s[right])
+
+            # Update max length
+            max_len = max(max_len, right - left + 1)
+
+        return max_len
+
+
+
+        ✅ Complexity
+
+Time: O(n) — each character is visited at most twice.
+
+Space: O(min(n, charset)) — set stores current window characters.

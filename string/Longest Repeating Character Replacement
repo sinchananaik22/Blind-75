@@ -1,0 +1,30 @@
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        count = {}
+        left = 0
+        max_count = 0  # max frequency of a single char in the window
+        res = 0
+
+        for right in range(len(s)):
+            # Update frequency count
+            count[s[right]] = count.get(s[right], 0) + 1
+            max_count = max(max_count, count[s[right]])
+
+            # If more than k replacements needed, shrink window
+            while (right - left + 1) - max_count > k:
+                count[s[left]] -= 1
+                left += 1
+
+            # Update result with current window size
+            res = max(res, right - left + 1)
+
+        return res
+
+
+
+
+✅ Complexity
+
+Time: O(n) — each character visited once
+
+Space: O(26) = O(1) — fixed alphabet (A–Z)

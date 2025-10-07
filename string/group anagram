@@ -1,0 +1,23 @@
+from collections import defaultdict
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagrams = defaultdict(list)
+
+        for word in strs:
+            # Sort the word and use as key
+            key = ''.join(sorted(word))
+            anagrams[key].append(word)
+
+        return list(anagrams.values())
+
+
+✅ Complexity
+
+Time:
+
+Method 1: O(n * k log k) → n = number of words, k = max word length
+
+Method 2: O(n * k) → faster for long words
+
+Space: O(n * k) → for storing grouped anagrams
